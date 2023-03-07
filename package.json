@@ -1,0 +1,14 @@
+{
+  "name": "payment-update",
+  "version": "1.0.0",
+  "description": "update payments for collateral networks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hich",
+  "license": "ISC",
+  "devDependencies": {
+    "axios": "^1.3.4"
+  }
+}

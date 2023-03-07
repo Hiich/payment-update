@@ -38,34 +38,37 @@ const fetchData = async () => {
     const { data: bnbTransfers } = await axios.get(bnbUrl)
 
     //remove ethtransfers and usdttransfers where from is the wallet address
-    ethTransfers.result = ethTransfers.result.filter((transfer) => transfer.to.toLowerCase() === WALLET_ADDRESS.toLowerCase());
-    usdtTransfers.result = usdtTransfers.result.filter((transfer) => transfer.to.toLowerCase() === WALLET_ADDRESS.toLowerCase());
-    bnbTransfers.result = bnbTransfers.result.filter((transfer) => transfer.to.toLowerCase() === WALLET_ADDRESS.toLowerCase());
+    if (ethTransfers.status === "1")
+        ethTransfers.result = ethTransfers.result.filter((transfer) => transfer.to.toLowerCase() === WALLET_ADDRESS.toLowerCase());
+    if (usdtTransfers.status === "1")
+        usdtTransfers.result = usdtTransfers?.result.filter((transfer) => transfer.to.toLowerCase() === WALLET_ADDRESS.toLowerCase());
+    if (bnbTransfers.status === "1")
+        bnbTransfers.result = bnbTransfers.result.filter((transfer) => transfer.to.toLowerCase() === WALLET_ADDRESS.toLowerCase());
     return { ethTransfers, usdtTransfers, bnbTransfers, coltTransfers };
 }
 
 const filterTransfers = async () => {
     const { ethTransfers, usdtTransfers, bnbTransfers, coltTransfers } = await fetchData();
-    const ethTransfersFiltered = ethTransfers.result.filter(
+    const ethTransfersFiltered = ethTransfers.status === "1" ? ethTransfers.result.filter(
         //check if coltPayments contains the txhash
         (transfer) => !coltTransfers.some(
             (coltTransfer) => coltTransfer.txhash.toLowerCase() === transfer.hash.toLowerCase()
         )
-    );
+    ) : [];
 
-    const usdtTransfersFiltered = usdtTransfers.result.filter(
+    const usdtTransfersFiltered = usdtTransfers.status === "1" ? usdtTransfers.result.filter(
         //check if coltPayments contains the txhash
         (transfer) => !coltTransfers.some(
             (coltTransfer) => coltTransfer.txhash.toLowerCase() === transfer.hash.toLowerCase()
         )
-    );
+    ) : [];
 
-    const bnbTransfersFiltered = bnbTransfers.result.filter(
+    const bnbTransfersFiltered = bnbTransfers.status === "1" ? bnbTransfers.result.filter(
         //check if coltPayments contains the txhash
         (transfer) => !coltTransfers.some(
             (coltTransfer) => coltTransfer.txhash.toLowerCase() === transfer.hash.toLowerCase()
         )
-    );
+    ) : [];
 
     return { ethTransfersFiltered, usdtTransfersFiltered, bnbTransfersFiltered };
 }

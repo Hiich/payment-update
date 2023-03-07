@@ -22,8 +22,6 @@ To run the script, use the command `node index.js`. This will update the databas
 
 If you don't want to update the database and simply simulate what would happen and check the results in logs folder, you can run the script as follows:
 
-bashCopy code
-
 `node index.js test`
 
 Credits
